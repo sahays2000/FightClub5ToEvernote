@@ -31,7 +31,7 @@ let x = 0;
 var testsuites = []
 readFiles(dir + '/', function (filename, content) {
     parseString(content, function (err, results) {
-        if (filename == '.DS_Store' || filename =='.gitkeep') {
+        if (filename == '.DS_Store' || filename == '.gitkeep') {
             return;
         }
 
@@ -494,14 +494,22 @@ function spellOutputXML(item) {
 <note><title>{0}</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
 <en-note><div>{1}</div><div>{2}</div><div>{3}</div><div>{4}</div><div><b>Components</b>: {5}</div><div>{6}</div><div>{7}</div><div><hr/></div><div><b>Description</b>:</div><div>{8}</div><div>{9}<div>{10}</div></div><div><br/></div><div><br/></div></en-note>
-]]></content><created>20170615T073616Z</created><updated>20170615T112931Z</updated><tag>Spell</tag>{11}<tag>{12}</tag><note-attributes><author>codeiain@outlook.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+]]></content><created>20170615T073616Z</created><updated>20170615T112931Z</updated><tag>Spell</tag>{11}<note-attributes><author>codeiain@outlook.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
 </en-export>`
     var tags = "";
     var classes = item.classes.replace('<b>Classes:</b> ', '').split(',')
     for (var x = 0; x < classes.length; x++) {
         tags += '<tag>' + classes[x].replace(' ', '') + '</tag>'
     }
-    return templare.format(item.name, item.level, item.school, item.ritual, item.time, item.range, item.components, item.duration, item.classes, item.text, item.roll, tags, item.school.replace('<b>School:</b> ',''));
+
+    var school = item.school.replace('<b>School:</b> ', '');
+    if (school != "") {
+        school = school.replace('(', ' ');
+        school = school.replace(')', '');
+        tags += '<tag>' + school + '</tag>';
+    }
+
+    return templare.format(item.name, item.level, item.school, item.ritual, item.time, item.range, item.components, item.duration, item.classes, item.text, item.roll, tags);
 }
 
 function itemOutputXML(item) {
@@ -542,22 +550,22 @@ function monsterOutputXML(monster) {
         , monster.speed, monster.str, monster.dex, monster.con, monster.int, monster.wis, monster.cha, monster.details, createHR(), monster.trait, createHR(), monster.action, createHR(), monster.spells, createHR(), monster.legendary, monster.reaction, "CR-" + monster.cr, cleanMonsterTag(monster.type));
 }
 
-function cleanMonsterTag(tag){
-    tag = tag.replace(', monster manual','');
-    tag = tag.replace(", Volo's Guide",'');
-    tag = tag.replace(", Volo's Guide","");
-    tag = tag.replace(',tome of Beasts','');
-    tag = tag.replace(', elemental evil','');
-    tag = tag.replace(', tyranny of dragons','');
-    tag = tag.replace(', out of the abyss','');
-    tag = tag.replace(", Volo's Guide, Volo's Guide",'');
-    tag = tag.replace(', curse of strahd','');
-    tag = tag.replace(', lost mine of phandelver','');
-    tag = tag.replace(', storm kings thunder','');
+function cleanMonsterTag(tag) {
+    tag = tag.replace(', monster manual', '');
+    tag = tag.replace(", Volo's Guide", '');
+    tag = tag.replace(", Volo's Guide", "");
+    tag = tag.replace(',tome of Beasts', '');
+    tag = tag.replace(', elemental evil', '');
+    tag = tag.replace(', tyranny of dragons', '');
+    tag = tag.replace(', out of the abyss', '');
+    tag = tag.replace(", Volo's Guide, Volo's Guide", '');
+    tag = tag.replace(', curse of strahd', '');
+    tag = tag.replace(', lost mine of phandelver', '');
+    tag = tag.replace(', storm kings thunder', '');
     console.log(tag);
     return tag.toLowerCase();
 }
-    
+
 
 
 
