@@ -507,14 +507,14 @@ function spellOutputXML(item) {
 <note><title>{0}</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
 <en-note><div>{1}</div><div>{2}</div><div>{3}</div><div>{4}</div><div><b>Components</b>: {5}</div><div>{6}</div><div>{7}</div><div><hr/></div><div><b>Description</b>:</div><div>{8}</div><div>{9}<div>{10}</div></div><div><br/></div><div><br/></div></en-note>
-]]></content><created>20170615T073616Z</created><updated>20170615T112931Z</updated><tag>Spell</tag>{11}<note-attributes><author>codeiain@outlook.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+]]></content><created>20170615T073616Z</created><updated>20170615T112931Z</updated><tag>Spell</tag>{11}<tag>{12}</tag><note-attributes><author>codeiain@outlook.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
 </en-export>`
     var tags = "";
     var classes = item.classes.replace('<b>Classes:</b> ', '').split(',')
     for (var x = 0; x < classes.length; x++) {
         tags += '<tag>' + classes[x].replace(' ', '') + '</tag>'
     }
-    return templare.format(item.name, item.level, item.school, item.ritual, item.time, item.range, item.components, item.duration, item.classes, item.text, item.roll, tags);
+    return templare.format(item.name, item.level, item.school, item.ritual, item.time, item.range, item.components, item.duration, item.classes, item.text, item.roll, tags, item.school.replace('<b>School:</b> ',''));
 }
 
 function itemOutputXML(item) {
@@ -579,7 +579,7 @@ function featOutputXML(feat) {
 <note><title>{0}</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
 <en-note><div>{1}</div></en-note>
-]]></content><created>20170616T071424Z</created><updated>20170616T072510Z</updated><tag>Feat</tag><note-attributes><author>codeiain@outlook.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+]]></content><created>20170616T071424Z</created><updated>20170616T072510Z</updated><tag>Feat</tag><tag>{0}</tag><note-attributes><author>codeiain@outlook.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
 </en-export>`
 
     return templare.format(feat.name, feat.body);
