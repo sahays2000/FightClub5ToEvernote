@@ -41,7 +41,7 @@ readFiles(dir + '/', function (filename, content) {
                 var current = items.spell[x];
                 var formated = ParseSpell(current);
                 var currentFileName = current.name[0].replace(' ', '_').replace('/', '_').replace("'", '') + '.enex';
-                console.log(formated.name);
+                //console.log(formated.name);
                 fs.writeFile(path.resolve(__dirname, "spells/" + currentFileName), spellOutputXML(formated), function (err) {
                     if (err) {
                         return console.log(err);
@@ -55,7 +55,7 @@ readFiles(dir + '/', function (filename, content) {
                 var current = items.item[x];
                 var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
                 var formated = ParseItems(current);
-                console.log(formated.name);
+                //console.log(formated.name);
                 fs.writeFile(path.resolve(__dirname, "items/" + currentFileName), itemOutputXML(formated), function (err) {
                     if (err) {
                         return console.log(err);
@@ -68,7 +68,7 @@ readFiles(dir + '/', function (filename, content) {
                 var current = items.monster[x];
                 var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
                 var formated = ParseMonster(current);
-                console.log(formated.name);
+                //console.log(formated.name);
                 fs.writeFile(path.resolve(__dirname, "monster/" + currentFileName), monsterOutputXML(formated), function (err) {
                     if (err) {
                         return console.log(err);
@@ -81,7 +81,7 @@ readFiles(dir + '/', function (filename, content) {
                 var current = items.background[x];
                 var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
                 var formated = ParseBackground(current);
-                console.log(formated.name);
+                //console.log(formated.name);
                 fs.writeFile(path.resolve(__dirname, "background/" + currentFileName), backgroundOutputXML(formated), function (err) {
                     if (err) {
                         return console.log(err);
@@ -94,20 +94,7 @@ readFiles(dir + '/', function (filename, content) {
                 var current = items.feat[x];
                 var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
                 var formated = ParesFeat(current);
-                console.log(formated.name);
-                fs.writeFile(path.resolve(__dirname, "feat/" + currentFileName), featOutputXML(formated), function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                });
-            }
-        }
-        if (items.feat != undefined) {
-            for (let x = 0; x < items.feat.length; x++) {
-                var current = items.feat[x];
-                var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
-                var formated = ParesFeat(current);
-                console.log(formated.name);
+                //console.log(formated.name);
                 fs.writeFile(path.resolve(__dirname, "feat/" + currentFileName), featOutputXML(formated), function (err) {
                     if (err) {
                         return console.log(err);
@@ -120,7 +107,7 @@ readFiles(dir + '/', function (filename, content) {
                 var current = items.race[x];
                 var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
                 var formated = ParesRace(current);
-                console.log(formated.name);
+                //console.log(formated.name);
                 fs.writeFile(path.resolve(__dirname, "race/" + currentFileName), raceOutputXML(formated), function (err) {
                     if (err) {
                         return console.log(err);
@@ -547,14 +534,30 @@ function monsterOutputXML(monster) {
 <note><title>{0}</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
 <en-note><div><i>{2} {1} {3}</i></div><div><i><br/></i></div><table style="width: 100%; border: none; border-collapse: collapse; table-layout: fixed;"><tbody><tr><td style="width: 15.543071161048688%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 50%;"><div>Amor Class</div></td><td style="width: 84.33208489388264%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 50%;"><div>{4}</div></td></tr><tr><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div>Hit Points</div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div>{5}</div></td></tr><tr><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;">Speed</td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div>{6}</div></td></tr></tbody></table><div><hr/><br/></div><table style="width: 100%; border: none; border-collapse: collapse; table-layout: fixed;"><tbody><tr><td style="width: 16.666666666666668%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 16.666666666666668%;"><div>STR</div></td><td style="width: 16.666666666666668%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 16.666666666666668%;"><div>DEX</div></td><td style="width: 16.666666666666668%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 16.666666666666668%;"><div>CON</div></td><td style="width: 16.666666666666668%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 16.666666666666668%;"><div>INT</div></td><td style="width: 16.666666666666668%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 16.666666666666668%;"><div>WIS</div></td><td style="width: 16.666666666666668%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 16.666666666666668%;"><div>CHA</div></td></tr><tr><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div>{7}</div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div>{8}</div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div>{9}</div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div>{10}</div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div>{11}</div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div>{12}</div></td></tr></tbody></table><div><hr/></div><div><br/></div><div/><table style="width: 100%; border: none; border-collapse: collapse; table-layout: fixed;"><tbody>{13}</tbody></table>{14}<table style="width: 100%; border: none; border-collapse: collapse; table-layout: fixed;"><tbody>{15}</tbody></table>{16}<table style="width: 100%; border: none; border-collapse: collapse; table-layout: fixed;"><tbody><tr><td style="width: 50%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 50%;"><div><b>Actions</b></div></td><td style="width: 50%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 50%;"><div><br/></div></td></tr>{17}</tbody></table><div>{18}{19}{20}{21}{22}<br/></div></en-note>
-]]></content><created>20170615T154351Z</created><updated>20170615T163456Z</updated><tag>Monster</tag><tag>{23}</tag><note-attributes><latitude>55.97468375802527</latitude><longitude>-3.169147832769942</longitude><altitude>11.30382442474365</altitude><author>codeiain@outlook.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+]]></content><created>20170615T154351Z</created><updated>20170615T163456Z</updated><tag>Monster</tag><tag>{23}</tag><tag>{24}</tag><note-attributes><latitude>55.97468375802527</latitude><longitude>-3.169147832769942</longitude><altitude>11.30382442474365</altitude><author>codeiain@outlook.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
 </en-export>
 `
 
     return templare.format(monster.name, monster.size, monster.type, monster.alignment, monster.ac, monster.hp
-        , monster.speed, monster.str, monster.dex, monster.con, monster.int, monster.wis, monster.cha, monster.details, createHR(), monster.trait, createHR(), monster.action, createHR(), monster.spells, createHR(), monster.legendary, monster.reaction, "CR-" + monster.cr);
+        , monster.speed, monster.str, monster.dex, monster.con, monster.int, monster.wis, monster.cha, monster.details, createHR(), monster.trait, createHR(), monster.action, createHR(), monster.spells, createHR(), monster.legendary, monster.reaction, "CR-" + monster.cr, cleanMonsterTag(monster.type));
 }
 
+function cleanMonsterTag(tag){
+    tag = tag.replace(', monster manual','');
+    tag = tag.replace(", Volo's Guide",'');
+    tag = tag.replace(", Volo's Guide","");
+    tag = tag.replace(',tome of Beasts','');
+    tag = tag.replace(', elemental evil','');
+    tag = tag.replace(', tyranny of dragons','');
+    tag = tag.replace(', out of the abyss','');
+    tag = tag.replace(", Volo's Guide, Volo's Guide",'');
+    tag = tag.replace(', curse of strahd','');
+    tag = tag.replace(', lost mine of phandelver','');
+    tag = tag.replace(', storm kings thunder','');
+    console.log(tag);
+    return tag.toLowerCase();
+}
+    
 
 
 
