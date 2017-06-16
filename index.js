@@ -31,7 +31,7 @@ let x = 0;
 var testsuites = []
 readFiles(dir + '/', function (filename, content) {
     parseString(content, function (err, results) {
-        if (filename == '.DS_Store') {
+        if (filename == '.DS_Store' || filename =='.gitkeep') {
             return;
         }
 
@@ -89,13 +89,39 @@ readFiles(dir + '/', function (filename, content) {
                 });
             }
         }
-        if (items.feat != undefined){
-            for (let x = 0; x< items.feat.length; x++){
+        if (items.feat != undefined) {
+            for (let x = 0; x < items.feat.length; x++) {
                 var current = items.feat[x];
                 var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
                 var formated = ParesFeat(current);
                 console.log(formated.name);
                 fs.writeFile(path.resolve(__dirname, "feat/" + currentFileName), featOutputXML(formated), function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                });
+            }
+        }
+        if (items.feat != undefined) {
+            for (let x = 0; x < items.feat.length; x++) {
+                var current = items.feat[x];
+                var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
+                var formated = ParesFeat(current);
+                console.log(formated.name);
+                fs.writeFile(path.resolve(__dirname, "feat/" + currentFileName), featOutputXML(formated), function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                });
+            }
+        }
+        if (items.race != undefined) {
+            for (let x = 0; x < items.race.length; x++) {
+                var current = items.race[x];
+                var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
+                var formated = ParesRace(current);
+                console.log(formated.name);
+                fs.writeFile(path.resolve(__dirname, "race/" + currentFileName), raceOutputXML(formated), function (err) {
                     if (err) {
                         return console.log(err);
                     }
@@ -118,7 +144,24 @@ if (!String.prototype.format) {
     };
 }
 
-function ParesFeat(feat){
+function ParesRace(race) {
+    var newRace = {
+        name: race.name[0],
+        size: (race.size != undefined ? getSize(race.size[0]) : ""),
+        speed: (race.speed != undefined ? race.speed[0] : ""),
+        ability: (race.ability != undefined ? race.ability[0] : ""),
+        trait: ""
+    };
+
+    if (race.trait) {
+        for (var x = 0; x < race.trait.length; x++) {
+            newRace.trait += CreateRow(race.trait[x].name, race.trait[x].text);
+        }
+    }
+    return newRace;
+}
+
+function ParesFeat(feat) {
     text = feat.text.join('<br/>');
     var newFeat = {
         name: feat.name[0],
@@ -245,7 +288,7 @@ function createHR() {
 }
 
 function getSize(size) {
-    let typestring = ""
+    let typeString = ""
     switch (size) {
         case 'T':
             typeString = 'Tiny'
@@ -266,7 +309,7 @@ function getSize(size) {
             typeString = 'Gargantuan'
             break;
     }
-    return typestring;
+    return typeString;
 }
 
 function ParseItems(item) {
@@ -529,7 +572,7 @@ function backgroundOutputXML(back) {
     return templare.format(back.name, back.proficiency, back.trait);
 }
 
-function featOutputXML(feat){
+function featOutputXML(feat) {
     var templare = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
 <en-export export-date="20170616T072527Z" application="Evernote" version="Evernote Mac 6.11.1 (455061)">
@@ -539,5 +582,18 @@ function featOutputXML(feat){
 ]]></content><created>20170616T071424Z</created><updated>20170616T072510Z</updated><tag>Feat</tag><note-attributes><author>codeiain@outlook.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
 </en-export>`
 
-return templare.format(feat.name, feat.body);
+    return templare.format(feat.name, feat.body);
+}
+
+
+function raceOutputXML(race) {
+    var templare = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export2.dtd">
+<en-export export-date="20170616T092258Z" application="Evernote/Windows" version="6.x">
+<note><title>{0}</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note><div><br/></div><table style="-evernote-table:true;border-collapse:collapse;table-layout:fixed;margin-left:0px;width:100%;"><tr><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>Size</div></td><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:49.91258741258741%;"><div>{1}</div></td></tr><tr><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>Speed</div></td><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>{2}</div></td></tr><tr><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>Ability Modifiers&nbsp;</div></td><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>{3}</div></td></tr>{4}</table><div><br/></div></en-note>]]></content><created>20170616T085603Z</created><updated>20170616T092233Z</updated><tag>Race</tag><tag>{0}</tag><note-attributes><author>codeiain@outlook.com</author><source>desktop.win</source><source-application>evernote.win32</source-application></note-attributes></note></en-export>
+`
+
+    return templare.format(race.name, race.size, race.speed, race.ability, race.trait);
 }
