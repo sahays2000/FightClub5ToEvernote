@@ -28,16 +28,17 @@ readFiles('xml/', function (filename, content) {
         }
 
         var items = results.compendium;
-
-        if (items.class != undefined) {
-            for (let x = 0; x < items.class.length; x++) {
-                var currentClass = cleanClass(items.class[x]);
-                var currentFileName = currentClass.name.replace(' ', '_').replace('/', '_') + '.enex';
-                fs.writeFile(path.resolve(__dirname, "classes/" + currentFileName), classOutputXml(currentClass), function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                });
+        if (items != undefined) {
+            if (items.class != undefined) {
+                for (let x = 0; x < items.class.length; x++) {
+                    var currentClass = cleanClass(items.class[x]);
+                    var currentFileName = currentClass.name.replace(' ', '_').replace('/', '_') + '.enex';
+                    fs.writeFile(path.resolve(__dirname, "classes/" + currentFileName), classOutputXml(currentClass), function (err) {
+                        if (err) {
+                            return console.log(err);
+                        }
+                    });
+                }
             }
         }
     });
@@ -62,8 +63,8 @@ function cleanClass(classes) {
         spellTable: "",
         featureRows: "",
         featureTable: "",
-        features:"",
-        featuresTable:""
+        features: "",
+        featuresTable: ""
     }
 
     for (let q = 1; q < 21; q++) {
@@ -112,21 +113,21 @@ function cleanClass(classes) {
         newClass.featureTable = createFeatureTable(newClass.featureRows);
     }
 
-    for (var ind = 0; ind< classes.autolevel.length; ind++){
+    for (var ind = 0; ind < classes.autolevel.length; ind++) {
 
-        if (classes.autolevel[ind].feature != undefined){
+        if (classes.autolevel[ind].feature != undefined) {
             console.log(classes.autolevel[ind].feature.length);
-            for (var idn = 0; idn < classes.autolevel[ind].feature.length; idn++){
+            for (var idn = 0; idn < classes.autolevel[ind].feature.length; idn++) {
                 console.log(classes.autolevel[ind].feature[idn].text.join('<br/>'));
-                newClass.features += createFeatureRow1({ name:classes.autolevel[ind].feature[idn].name[0], text:classes.autolevel[ind].feature[idn].text.join('<br/>')});
-                
+                newClass.features += createFeatureRow1({ name: classes.autolevel[ind].feature[idn].name[0], text: classes.autolevel[ind].feature[idn].text.join('<br/>') });
+
             }
-            
+
         }
     }
     newClass.featuresTable = createFeatureTable2(newClass.features);
 
-return newClass;
+    return newClass;
 }
 
 function getOrdinal(value) {
@@ -140,7 +141,7 @@ function getOrdinal(value) {
 
 function createSpellRow(spell) {
     var template = `<tr><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{0}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{1}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{2}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{3}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{4}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{5}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{6}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{7}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{8}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{9}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{10}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{11}</span></div></td></tr>`;
-    return template.format(spell.level, spell.feature, (spell.slots[0] != undefined ? spell.slots[0]:  0), (spell.slots[1] != undefined ? spell.slots[1]:  0), (spell.slots[2] != undefined ? spell.slots[2]:  0), (spell.slots[3] != undefined ? spell.slots[3]:  0), (spell.slots[4] != undefined ? spell.slots[4]:  0), (spell.slots[5] != undefined ? spell.slots[5]:  0), (spell.slots[6] != undefined ? spell.slots[6]:  0), (spell.slots[7] != undefined ? spell.slots[7]:  0), (spell.slots[8] != undefined ? spell.slots[8]:  0), (spell.slots[9] != undefined ? spell.slots[9]:  0));
+    return template.format(spell.level, spell.feature, (spell.slots[0] != undefined ? spell.slots[0] : 0), (spell.slots[1] != undefined ? spell.slots[1] : 0), (spell.slots[2] != undefined ? spell.slots[2] : 0), (spell.slots[3] != undefined ? spell.slots[3] : 0), (spell.slots[4] != undefined ? spell.slots[4] : 0), (spell.slots[5] != undefined ? spell.slots[5] : 0), (spell.slots[6] != undefined ? spell.slots[6] : 0), (spell.slots[7] != undefined ? spell.slots[7] : 0), (spell.slots[8] != undefined ? spell.slots[8] : 0), (spell.slots[9] != undefined ? spell.slots[9] : 0));
 }
 
 function createSpellTable(spells) {
@@ -183,7 +184,7 @@ function classOutputXml(classes) {
 </en-export>
 `
 
-    return templare.format(classes.name, classes.hd, classes.proficiency, classes.spellAbility, classes.spellTable, classes.featureTable, createHR(),classes.featuresTable);
+    return templare.format(classes.name, classes.hd, classes.proficiency, classes.spellAbility, classes.spellTable, classes.featureTable, createHR(), classes.featuresTable);
 }
 
 if (!String.prototype.format) {

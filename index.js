@@ -11,7 +11,6 @@ var fileAsJs = [];
 var FileCount = 0;
 function readFiles(dirname, onFileContent, onError) {
     fs.readdir(dirname, function (err, filenames) {
-        FileCount = filenames.length;
         if (err) {
             onError(err);
             return;
@@ -34,98 +33,100 @@ readFiles(dir + '/', function (filename, content) {
         if (filename == '.DS_Store' || filename == '.gitkeep') {
             return;
         }
-
+        console.log(filename);
         var items = results.compendium;
-        // if (items.spell != undefined) {
-        //     for (x = 0; x < items.spell.length; x++) {
-        //         var current = items.spell[x];
-        //         var formated = ParseSpell(current);
-        //         var currentFileName = current.name[0].replace(' ', '_').replace('/', '_').replace("'", '') + '.enex';
-        //         //console.log(formated.name);
-        //         fs.writeFile(path.resolve(__dirname, "spells/" + currentFileName), spellOutputXML(formated), function (err) {
-        //             if (err) {
-        //                 return console.log(err);
-        //             }
-        //         });
-        //     }
+        if (items != undefined) {
+            if (items.spell != undefined) {
+                for (x = 0; x < items.spell.length; x++) {
+                    var current = items.spell[x];
+                    var formated = ParseSpell(current);
+                    var currentFileName = current.name[0].replace(' ', '_').replace('/', '_').replace("'", '') + '.enex';
+                    //console.log(formated.name);
+                    if (!fs.existsSync(path.resolve(__dirname, "spells/" + currentFileName))) {
+                        // Do something
 
-        // }
-        // if (items.item != undefined) {
-        //     for (let x = 0; x < items.item.length; x++) {
-        //         var current = items.item[x];
-        //         var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
-        //         var formated = ParseItems(current);
-        //         //console.log(formated.name);
-        //         fs.writeFile(path.resolve(__dirname, "items/" + currentFileName), itemOutputXML(formated), function (err) {
-        //             if (err) {
-        //                 return console.log(err);
-        //             }
-        //         });
-        //     }
-        // }
-        // if (items.monster != undefined) {
-        //     for (let x = 0; x < items.monster.length; x++) {
-        //         var current = items.monster[x];
-        //         var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
-        //         var formated = ParseMonster(current);
-        //         //console.log(formated.name);
-        //         fs.writeFile(path.resolve(__dirname, "monster/" + currentFileName), monsterOutputXML(formated), function (err) {
-        //             if (err) {
-        //                 return console.log(err);
-        //             }
-        //         });
-        //     }
-        // }
-        // if (items.background != undefined) {
-        //     for (let x = 0; x < items.background.length; x++) {
-        //         var current = items.background[x];
-        //         var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
-        //         var formated = ParseBackground(current);
-        //         //console.log(formated.name);
-        //         fs.writeFile(path.resolve(__dirname, "background/" + currentFileName), backgroundOutputXML(formated), function (err) {
-        //             if (err) {
-        //                 return console.log(err);
-        //             }
-        //         });
-        //     }
-        // }
-        // if (items.feat != undefined) {
-        //     for (let x = 0; x < items.feat.length; x++) {
-        //         var current = items.feat[x];
-        //         var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
-        //         var formated = ParesFeat(current);
-        //         //console.log(formated.name);
-        //         fs.writeFile(path.resolve(__dirname, "feat/" + currentFileName), featOutputXML(formated), function (err) {
-        //             if (err) {
-        //                 return console.log(err);
-        //             }
-        //         });
-        //     }
-        // }
-        // if (items.race != undefined) {
-        //     for (let x = 0; x < items.race.length; x++) {
-        //         var current = items.race[x];
-        //         var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
-        //         var formated = ParesRace(current);
-        //         //console.log(formated.name);
-        //         fs.writeFile(path.resolve(__dirname, "race/" + currentFileName), raceOutputXML(formated), function (err) {
-        //             if (err) {
-        //                 return console.log(err);
-        //             }
-        //         });
-        //     }
-        // }
-        if (items.class != undefined){
-            for (let x = 0 ; x< 1; x++){
-                var current = items.class[x];
-                var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
-                //console.log(JSON.stringify(current));
-                var formated = ParseClasses(current);
-                fs.writeFile(path.resolve(__dirname, "classes/" + currentFileName), classOutputXml(formated), function (err) {
-                    if (err) {
-                        return console.log(err);
+                        fs.writeFile(path.resolve(__dirname, "spells/" + currentFileName), spellOutputXML(formated), function (err) {
+                            if (err) {
+                                return console.log(err);
+                            }
+                        });
                     }
-                });
+                }
+            }
+            if (items.item != undefined) {
+                for (let x = 0; x < items.item.length; x++) {
+                    var current = items.item[x];
+                    var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
+                    var formated = ParseItems(current);
+                    //console.log(formated.name);
+                    if (!fs.existsSync(path.resolve(__dirname, "items/" + currentFileName))) {
+                        fs.writeFile(path.resolve(__dirname, "items/" + currentFileName), itemOutputXML(formated), function (err) {
+                            if (err) {
+                                return console.log(err);
+                            }
+                        });
+                    }
+                }
+            }
+            if (items.monster != undefined) {
+                for (let x = 0; x < items.monster.length; x++) {
+                    var current = items.monster[x];
+                    var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
+                    var formated = ParseMonster(current);
+                    //console.log(formated.name);
+                    if (!fs.existsSync(path.resolve(__dirname, "monster/" + currentFileName))) {
+                        fs.writeFile(path.resolve(__dirname, "monster/" + currentFileName), monsterOutputXML(formated), function (err) {
+                            if (err) {
+                                return console.log(err);
+                            }
+                        });
+                    }
+                }
+            }
+            if (items.background != undefined) {
+                for (let x = 0; x < items.background.length; x++) {
+                    var current = items.background[x];
+                    var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
+                    var formated = ParseBackground(current);
+                    //console.log(formated.name);
+                    if (!fs.existsSync(path.resolve(__dirname, "background/" + currentFileName))) {
+                        fs.writeFile(path.resolve(__dirname, "background/" + currentFileName), backgroundOutputXML(formated), function (err) {
+                            if (err) {
+                                return console.log(err);
+                            }
+                        });
+                    }
+                }
+            }
+            if (items.feat != undefined) {
+                for (let x = 0; x < items.feat.length; x++) {
+                    var current = items.feat[x];
+                    var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
+                    var formated = ParesFeat(current);
+                    //console.log(formated.name);
+                    if (!fs.existsSync(path.resolve(__dirname, "feat/" + currentFileName))) {
+                        fs.writeFile(path.resolve(__dirname, "feat/" + currentFileName), featOutputXML(formated), function (err) {
+                            if (err) {
+                                return console.log(err);
+                            }
+                        });
+                    }
+                }
+            }
+            if (items.race != undefined) {
+                for (let x = 0; x < items.race.length; x++) {
+                    var current = items.race[x];
+                    var currentFileName = current.name[0].replace(' ', '_').replace('/', '_') + '.enex';
+                    var formated = ParesRace(current);
+                    //console.log(formated.name);
+                    if (!fs.existsSync(path.resolve(__dirname, "race/" + currentFileName))) {
+                        fs.writeFile(path.resolve(__dirname, "race/" + currentFileName), raceOutputXML(formated), function (err) {
+                            if (err) {
+                                return console.log(err);
+                            }
+                        });
+                    }
+                }
             }
         }
     });
@@ -144,80 +145,80 @@ if (!String.prototype.format) {
     };
 }
 
-function ParseClasses(classes){
+function ParseClasses(classes) {
     var newClass = {
-        name:classes.name[0],
-        hd: (classes.hd != undefined ? classes.hd[0]:""),
-        proficiency: (classes.proficiency != undefined ? classes.proficiency[0] :""),
-        spellAbility: (classes.spellAbility != undefined ? CreateRow('Spell Casting Ability',classes.spellAbility[0]):""),
-        details:[],
-        spells:"",
-        SpellTable:""
+        name: classes.name[0],
+        hd: (classes.hd != undefined ? classes.hd[0] : ""),
+        proficiency: (classes.proficiency != undefined ? classes.proficiency[0] : ""),
+        spellAbility: (classes.spellAbility != undefined ? CreateRow('Spell Casting Ability', classes.spellAbility[0]) : ""),
+        details: [],
+        spells: "",
+        SpellTable: ""
     }
     console.log(classes.autolevel.length);
 
-        var details = {
-            level:"",
-            slots:[],
-            features:[]
-        }
-        for (let index = 1; index < 21; index++){
-            for (let y = 0; y < classes.autolevel.length; y++){
-                if (classes.autolevel[y].$.level == index){
-                    details.level = getOrdinal(classes.autolevel[y].$.level);
-                    console.log(details.level)
-                    if (classes.autolevel[y].slots != undefined){
-                        details.slots = classes.autolevel[y].slots;
-                        //console.log(classes.autolevel[y].slots)
+    var details = {
+        level: "",
+        slots: [],
+        features: []
+    }
+    for (let index = 1; index < 21; index++) {
+        for (let y = 0; y < classes.autolevel.length; y++) {
+            if (classes.autolevel[y].$.level == index) {
+                details.level = getOrdinal(classes.autolevel[y].$.level);
+                console.log(details.level)
+                if (classes.autolevel[y].slots != undefined) {
+                    details.slots = classes.autolevel[y].slots;
+                    //console.log(classes.autolevel[y].slots)
+                }
+                if (classes.autolevel[y].feature != undefined) {
+                    for (let i = 0; i < classes.autolevel[y].feature.length; i++) {
+                        details.features.push(classes.autolevel[y].feature[i].name);
+                        //console.log(classes.autolevel[y].feature[i].name);
                     }
-                    if (classes.autolevel[y].feature != undefined){
-                        for (let i = 0; i < classes.autolevel[y].feature.length ; i++){
-                            details.features.push(classes.autolevel[y].feature[i].name);
-                            //console.log(classes.autolevel[y].feature[i].name);
-                        }
 
-                    }
                 }
             }
-            newClass.details.push(details);
         }
-        console.log(JSON.stringify(newClass));
-        // for (let x = 0; x< 20; x++){
-        //     var spell ={
-        //         level:getOrdinal(classes.autolevel[x].$.level),
-        //         slots:classes.autolevel[x].slots[0].split(','),
-        //         feature:[]
-        //     }
-        //     for (let y = 0; y< classes.autolevel[x+20].feature.length; y++){
-        //         var fet = classes.autolevel[x+20].feature[y].name[0]
-        //         spell.feature.push(fet)
-        //     }
-        //        newClass.spells += createSpellRow(spell);   
-        // }
-        // newClass.SpellTable = createSpellTable(newClass.spells);
+        newClass.details.push(details);
+    }
+    console.log(JSON.stringify(newClass));
+    // for (let x = 0; x< 20; x++){
+    //     var spell ={
+    //         level:getOrdinal(classes.autolevel[x].$.level),
+    //         slots:classes.autolevel[x].slots[0].split(','),
+    //         feature:[]
+    //     }
+    //     for (let y = 0; y< classes.autolevel[x+20].feature.length; y++){
+    //         var fet = classes.autolevel[x+20].feature[y].name[0]
+    //         spell.feature.push(fet)
+    //     }
+    //        newClass.spells += createSpellRow(spell);   
+    // }
+    // newClass.SpellTable = createSpellTable(newClass.spells);
 
     //console.log(newClass);
     return newClass;
 }
 
-    function createSpellTable(spells){
-        var templare =`<table style="width: 100%; border: none; border-collapse: collapse; table-layout: fixed;"><tbody><tr><td style="width: 7.6923076923076925%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 7.6923076923076925%;"><div><span style="font-size: 10px;">Level</span></div></td><td style="width: 36.381802721088434%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 7.6923076923076925%;"><div><span style="font-size: 10px;">Features</span></div></td><td style="width: 8.244047619047619%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">Cantrips</span></div></td><td style="width: 6.530612244897959%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">1st</span></div></td><td style="width: 6.530612244897959%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">2nd</span></div></td><td style="width: 5%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">3rd</span></div></td><td style="width: 5%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">4th</span></div></td><td style="width: 5%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">5th</span></div></td><td style="width: 5%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">6th</span></div></td><td style="width: 5%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">7th</span></div></td><td style="width: 5%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">8th</span></div></td><td style="width: 5%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">9th</span></div></td></tr>{0}</tbody></table><div><br/></div>`;
-        return templare.format(spells);
-    }
+function createSpellTable(spells) {
+    var templare = `<table style="width: 100%; border: none; border-collapse: collapse; table-layout: fixed;"><tbody><tr><td style="width: 7.6923076923076925%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 7.6923076923076925%;"><div><span style="font-size: 10px;">Level</span></div></td><td style="width: 36.381802721088434%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 7.6923076923076925%;"><div><span style="font-size: 10px;">Features</span></div></td><td style="width: 8.244047619047619%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">Cantrips</span></div></td><td style="width: 6.530612244897959%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">1st</span></div></td><td style="width: 6.530612244897959%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">2nd</span></div></td><td style="width: 5%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">3rd</span></div></td><td style="width: 5%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">4th</span></div></td><td style="width: 5%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">5th</span></div></td><td style="width: 5%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">6th</span></div></td><td style="width: 5%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">7th</span></div></td><td style="width: 5%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">8th</span></div></td><td style="width: 5%; border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px; min-width: 5%;"><div><span style="font-size: 10px;">9th</span></div></td></tr>{0}</tbody></table><div><br/></div>`;
+    return templare.format(spells);
+}
 
-    function createSpellRow(spell){
-        var template = `<tr><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{0}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{1}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{2}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{3}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{4}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{5}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{6}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{7}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{8}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{9}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{10}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{11}</span></div></td></tr>`;
-        return template.format(spell.level, spell.feature.join('<br/>'), spell.slots[0], spell.slots[1], spell.slots[2], spell.slots[3], spell.slots[4], spell.slots[5], spell.slots[6], spell.slots[7], spell.slots[8], spell.slots[9]);
-    }
+function createSpellRow(spell) {
+    var template = `<tr><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{0}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{1}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{2}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{3}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{4}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{5}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{6}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{7}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{8}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{9}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{10}</span></div></td><td style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;"><div><span style="font-size: 10px;">{11}</span></div></td></tr>`;
+    return template.format(spell.level, spell.feature.join('<br/>'), spell.slots[0], spell.slots[1], spell.slots[2], spell.slots[3], spell.slots[4], spell.slots[5], spell.slots[6], spell.slots[7], spell.slots[8], spell.slots[9]);
+}
 
-    function getOrdinal (value) {
-        if ((parseFloat(value) == parseInt(value, 10)) && !isNaN(value)) {
-            var s = ["th", "st", "nd", "rd"],
-                v = value % 100;
-            return value + (s[(v - 20) % 10] || s[v] || s[0]);
-        }
-        return value;
+function getOrdinal(value) {
+    if ((parseFloat(value) == parseInt(value, 10)) && !isNaN(value)) {
+        var s = ["th", "st", "nd", "rd"],
+            v = value % 100;
+        return value + (s[(v - 20) % 10] || s[v] || s[0]);
     }
+    return value;
+}
 
 
 function ParesRace(race) {
@@ -699,8 +700,8 @@ function raceOutputXML(race) {
 }
 
 
-function classOutputXml(classes){
-var templare = `<?xml version="1.0" encoding="UTF-8"?>
+function classOutputXml(classes) {
+    var templare = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
 <en-export export-date="20170616T172159Z" application="Evernote" version="Evernote Mac 6.11.1 (455061)">
 <note><title>{0}</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -710,13 +711,13 @@ var templare = `<?xml version="1.0" encoding="UTF-8"?>
 </en-export>
 `
 
-return templare.format(classes.name, classes.hd, classes.proficiency, classes.spellAbility,classes.SpellTable)
+    return templare.format(classes.name, classes.hd, classes.proficiency, classes.spellAbility, classes.SpellTable)
 }
 
-function SpellTable(){
+function SpellTable() {
 
 }
 
-function SpellRow(){
+function SpellRow() {
 
 }
