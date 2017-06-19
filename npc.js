@@ -2,17 +2,6 @@ var request = require('request');
 var fs = require('fs');
 var path = require('path');
 
-var names = []
-var gender = [];
-var race = [];
-var occupation = [];
-var hair = [];
-var eyes = [];
-var skin = [];
-var build = [];
-var face = [];
-var orientation = [];
-var status = [];
 
 
 function getfiles(callback) {
@@ -28,10 +17,20 @@ function getfiles(callback) {
             }
         }
     })
-
-
 }
 
+var template = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export2.dtd">
+<en-export export-date="20170619T085751Z" application="Evernote/Windows" version="6.x">
+<note><title>{0}</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+
+<en-note><div><b><span style="font-size: 21px;">Description</span></b></div><div><br/></div><table style="border-collapse: collapse; margin-left: 0px; table-layout: fixed;width:100%;"><tr><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>Age</div></td><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:49.91258741258741%;"><div>{1}</div></td></tr><tr><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>Gender</div></td><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>{2}</div></td></tr><tr><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>Race</div></td><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>{3}</div></td></tr><tr><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;">Occupation</td><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>{4}</div></td></tr></table><div>&nbsp;</div><div><span style="font-size: 21px;"><b>Appearance</b></span></div><div><br/></div><table style="-evernote-table:true;border-collapse:collapse;width:100%;table-layout:fixed;margin-left:0px;"><tr><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>Hair</div></td><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>{5}</div></td></tr><tr><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>Eyes</div></td><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>{6}</div></td></tr><tr><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>Skin</div></td><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>{7}</div></td></tr><tr><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>Height</div></td><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>{8}</div></td></tr><tr><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>Build</div></td><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>{9}</div></td></tr><tr><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>Face</div></td><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>{10}</div></td></tr></table><div>&nbsp;</div><div><span style="font-size: 21px;"><b>Abilities</b></span></div><div><br/></div><table style="-evernote-table:true;border-collapse:collapse;width:100%;table-layout:fixed;margin-left:0px;"><tr><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>Str</div></td><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>{11}</div></td></tr><tr><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>Dex</div></td><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>{12}</div></td></tr><tr><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>Con</div></td><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>{13}</div></td></tr><tr><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>Int</div></td><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>{14}</div></td></tr><tr><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>Wis</div></td><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>{15}</div></td></tr><tr><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>Cha</div></td><td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:50%;"><div>{16}</div></td></tr></table><div>&nbsp;</div></en-note>]]></content><created>20170619T085318Z</created><updated>20170619T085724Z</updated><tag>Npc</tag><tag>{2}</tag><tag>{3}</tag><note-attributes><author>codeiain@outlook.com</author><source>desktop.win</source><source-application>evernote.win32</source-application></note-attributes></note></en-export>
+`;
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 function get(batch, callback) {
     var _self = this;
@@ -40,98 +39,65 @@ function get(batch, callback) {
     for (var x = 0; x < 100; x++) {
         getfiles((npc, error) => {
 
-            var data = JSON.parse(npc);
-            var n = data.description.name.split(' ');
-            for (let x = 0; x < n.length; x++) {
-                n[x] = n[x].replace(' ','');
-                if (!contains(names, n[x])) {
-                    names.push(n[x]);
-                }
-            }
-            if (!contains(gender, data.description.gender)) {
-                gender.push(data.description.gender);
-            }
-            if (!contains(race, data.description.race)) {
-                race.push(data.description.race);
-            }
-            if (!contains(occupation, data.description.occupation)) {
-                occupation.push(data.description.occupation);
-            }
+        console.log(npc);
+        var h = JSON.parse(npc);
+          var newNPC = {
+              name: capitalizeFirstLetter(h.description.name),
+              age: h.description.age,
+              gender : capitalizeFirstLetter(h.description.gender),
+              race: capitalizeFirstLetter(h.description.race),
+              occupation: capitalizeFirstLetter(h.description.occupation),
+              hair: capitalizeFirstLetter(h.physical.hair),
+              eyes: capitalizeFirstLetter(h.physical.eyes),
+              skin: capitalizeFirstLetter(h.physical.skin),
+              height: h.physical.height,
+              build: capitalizeFirstLetter(h.physical.build),
+              face: capitalizeFirstLetter(h.physical.face),
+              str: h.abilities.str,
+              dex: h.abilities.dex,
+              con: h.abilities.con,
+              int: h.abilities.int,
+              wis: h.abilities.wis,
+              cha: h.abilities.cha
+          }
+          var currentFileName = newNPC.name.replace(' ', '_').replace('/', '_').replace("'", '') + '.enex';
 
-            var h = data.physical.hair.split(',');
-            for (let x = 0; x < h.length; x++) {
-                h[x] = h[x].replace(' ','');
-                if (!contains(hair, h[x])) {
-                    hair.push(h[x]);
-                }
-            }
+          var fileContent = npcOutput(newNPC)
 
-            if (!contains(eyes, data.physical.eyes)) {
-                eyes.push(data.physical.eyes);
-            }
+          fs.writeFile(path.resolve(__dirname, "npcs/" + currentFileName),fileContent , function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                });
 
-            if (!contains(skin, data.physical.skin)) {
-                skin.push(data.physical.skin);
-            }
-
-            if (!contains(build, data.physical.build)) {
-                build.push(data.physical.build);
-            }
-
-            var h = data.physical.face.split(',');
-            for (let x = 0; x < h.length; x++) {
-               h[x] = h[x].replace(' ','');
-                if (!contains(face, h[x])) {
-                    face.push(h[x]);
-                }
-            }
-
-            if (!contains(orientation, data.relationship.orientation)) {
-                orientation.push(data.relationship.orientation);
-            }
-            if (!contains(status, data.relationship.status)) {
-                status.push(data.relationship.status);
-            }
-
-            var output = `names {0} \t gender {1} \t  race {2} \t occupation {3} \t  hair {4} \t eyes {5} \t skin {6} \t build {7} \t  face {8} orientation {9} \t  status {10}`
-
-            console.log(output.format( names.length, gender.length, race.length, occupation.length, hair.length, eyes.length, skin.length, build.length, face.length, orientation.length, status.length));
-            _self.count++;
-            if (_self.count == 100){
-                callback();
-            }
         });
 
     }
 
 }
 
+function npcOutput(newNPC){
+
+    return template.format(newNPC.name, newNPC.age, newNPC.gender, newNPC.race, newNPC.occupation, newNPC.hair, newNPC.eyes, newNPC.skin, newNPC.height, newNPC.build, newNPC.face, newNPC.str, newNPC.dex, newNPC.con, newNPC.int, newNPC.wis, newNPC.cha);
+}
+
+
 function start(batch) {
     console.log('starting')
     get(batch, () => {
+        batch++;
+        if (batch == 1000) {
+            process.exit();
+        }
         console.log('waiting');
         var waitTill = new Date(new Date().getTime() + 10 * 1000);
         while (waitTill > new Date()) { }
-        batch++;
-        if (batch == 1000){
-            process.exit();
-        }
+
         start(batch);
     });
 }
 process.stdin.resume();
 start(0);
-
-
-function contains(a, obj) {
-    var i = a.length;
-    while (i--) {
-        if (a[i] === obj) {
-            return true;
-        }
-    }
-    return false;
-}
 
 if (!String.prototype.format) {
     String.prototype.format = function () {
@@ -144,34 +110,3 @@ if (!String.prototype.format) {
         });
     };
 }
-
-function exitHandler(options, err) {
-
-    var data = {
-        names: names,
-        gender: gender,
-        race: race,
-        occupation: occupation,
-        hair: hair,
-        eyes: eyes,
-        skin: skin,
-        build: build,
-        face: face,
-        relationship: {
-            orientation: orientation,
-            status: status
-        }
-    }
-    fs.writeFileSync(path.resolve(__dirname, "npc.json"), JSON.stringify(data));
-
-
-}
-
-//do something when app is closing
-process.on('exit', exitHandler.bind(null, { cleanup: true }));
-
-//catches ctrl+c event
-process.on('SIGINT', exitHandler.bind(null, { exit: true }));
-
-//catches uncaught exceptions
-process.on('uncaughtException', exitHandler.bind(null, { exit: true }));
